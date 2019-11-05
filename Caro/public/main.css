@@ -1,0 +1,7 @@
+body{background-color: azure}
+#wrapper{width: 70%; margin:auto}
+#left{width: 50%; background-color:beige; float:left; min-height: 75px; text-align: center; padding-top: 25px;}
+#right{width: 50%; background-color: blanchedalmond; float: right; min-height: 75px; text-align: center; padding-top: 25px;}
+#content{width:500px; margin:auto; padding-top:50px}
+.oco{border:solid 1px cornflowerblue;width:20px; height:20px; text-align: center; float:left}
+.xanh{background-color: cyan; cursor: pointer}

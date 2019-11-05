@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="./main.css" rel="stylesheet" />
+    <script src="./js/jquery.js"></script>
+    <script src="./socket.io/socket.io.js"></script>
+    <script>
+    var socket = io("http://172.16.1.130:3000");
+
+    socket.on("X-danh-ne", function(data){
+        $(".oco[oco='"+data+"']").html("X");
+    });
+
+    socket.on("O-danh-ne", function(data){
+        $(".oco[oco='"+data+"']").html("O");
+    });
+
+    socket.on("co-nguoi-dangky-X", function(data){
+        $("#txtPlayerX").val(data);
+        $("#btnX").hide();
+    });
+    
+    socket.on("dangky-X-thanhcong", function(data){
+        $("#txtPlayerX").val(data);
+        $("#btnX").hide();
+        $("#btnY").hide();
+    });
+
+    socket.on("co-nguoi-dangky-O", function(data){
+        $("#txtPlayerO").val(data);
+        $("#btnO").hide();
+    });
+    
+    socket.on("dangky-O-thanhcong", function(data){
+        $("#txtPlayerO").val(data);
+        $("#btnO").hide();
+        $("#btnO").hide();
+    });
+
+    $(document).ready(function(){
+       
+        //playerX đăng ký
+        $("#btnX").click(function(){
+            socket.emit("playerX-dangky", $("#txtPlayerX").val() )
+        });
+
+        $("#btnO").click(function(){
+            socket.emit("playerO-dangky", $("#txtPlayerO").val() )
+        });
+
+        $(".oco").click(function(){
+            var oco = $(this).attr("oco");
+            socket.emit("player-danh", oco);
+        });
+
+        $(".oco").mouseover(function(){
+            $(this).addClass("xanh");
+        });
+
+        $(".oco").mouseout(function(){
+            $(this).removeClass("xanh");
+        });
+
+    });
+
+    </script>
+</head>
+<body>
+   <div id="wrapper">
+       <div id="left">
+           <input type="text" id="txtPlayerX" /><br/>
+           <button id="btnX">Play</button>
+       </div>
+       <div id="right">
+        <input type="text" id="txtPlayerO" /><br/>
+        <button id="btnO">Play</button>
+       </div>
+       <div id="content">
+
+        <% for(var i=0; i<=398; i++){ %>
+            <div class="oco" oco="<%- i %>"> </div>
+        <% } %>
+            
+
+       </div>
+   </div>
+
+</body>
+</html>
